@@ -1,12 +1,12 @@
-package main
+package spells
 
 import (
     "log"
     "os"
     "io/ioutil"
-    "fmt"
     "encoding/json"
     "sort"
+    "path/filepath"
 )
 
 type Component struct {
@@ -46,30 +46,29 @@ func (slice Spells) Swap(i, j int) {
 	slice[i], slice[j] = slice[j], slice[i]
 }
 
+func (s Spells) Save_to_JSON(dir string){
 
-func (s Spells) save_JSON(path string){
-
-     if _, err := os.Stat(path); err != nil {
+     if _, err := os.Stat(dir); err != nil {
 		if os.IsNotExist(err) {
-			os.Mkdir(path, 0755)
+			os.Mkdir(dir, 0755)
 		} else {
 			log.Println(err)
 		}
 	}
 
+	path := filepath.Join(dir, "spells.json")
 	b, err := json.Marshal(s)
 	if err != nil { log.Println(err) }
 
 	ioutil.WriteFile(path, b, 0644) 
 }
 
-func main() {
-
-     file, err := ioutil.ReadFile(os.Args[1])
+func From_JSON(path string) Spells{
+     file, err := ioutil.ReadFile(path)
      if err != nil {
              log.Fatal(err)
      }
-
+     
      var spells Spells
      err = json.Unmarshal(file, &spells)
      if err != nil {
@@ -77,13 +76,6 @@ func main() {
      }
     
     sort.Sort(spells)
-/*    fmt.Println("\nSorted")
-    for i, c := range spells {
-        fmt.Println(i, c.Name)
-    }*/
 
-    b, _ := json.Marshal(spells)
-    // Convert bytes to string.
-    s := string(b)
-    fmt.Println(s)
+    return spells
 }
