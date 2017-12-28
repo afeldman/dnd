@@ -1,0 +1,1 @@
+{"index": 45, "armor_class": {"base": 15, "max_bonus": 2, "dex_bonus": true}, "name": "Half Plate", "weight": 40, "stealth_disadvantage": true, "url": "http://www.dnd5eapi.co/api/equipment/45", "equipment_category": "Armor", "cost": {"unit": "gp", "quantity": 750}, "armor_category:": "Medium", "_id": "58f40bc5c9e7ce9f721536f9", "str_minimum": 0}
